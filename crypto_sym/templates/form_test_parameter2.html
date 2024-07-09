@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AES</title>
+  {% load static %}
+  <link rel="stylesheet" href="{% static 'form/style.css' %}" />
+  {% load bootstrap5 %} {% bootstrap_css %} {% bootstrap_javascript %}
+</head>
+
+<body>
+  <div class="centeredContainer">
+    <div class="top">
+      <h2>Chiffrer et Dechiffrer un message AES</h2>
+    </div>
+
+    <div class="bottom container">
+      <h3>ENTREZ LE MESSAGE</h3>
+      <form class="m-3 p-2" method="POST" action="{%url 'validate_params_aes'%}">
+        {% csrf_token %}
+
+        <div class="form-group">
+          <label for="process">Processus</label>
+          <select name="process" class="form-select">
+            <option value="encrypt">Chiffré</option>
+<!--            <option value="decrypt">Déchiffré</option>-->
+            <option value="encrypt-decrypt">Chiffré et Déchiffré</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="message">Message claire</label>
+          <input type="text" name="message" class="form-control" id="inputLignes"
+            placeholder="Entrez le message en claire" required />
+        </div>
+
+        <div class="form-group">
+          <label for="type">Type de AES</label>
+          <select name="type" class="form-select" id="aesType">
+            <option value="AES-128">AES-128</option>
+            <option value="AES-192">AES-192</option>
+            <option value="AES-256">AES-256</option>
+          </select>
+        </div>
+
+        <!-- Key inputs based on DES type -->
+        <div id="keyInputs">
+          <!-- JavaScript will dynamically add key inputs here -->
+        </div>
+
+        <div class="form-button text-center">
+          <button type="submit" class="btn btn-success btn-log rounded mt-2 w-">
+            Suivant
+          </button>
+        </div>
+      </form>
+      {% if error %}
+            <p style="color: red;">Erreur: {{ error }}</p>
+        {% endif %}
+    </div>
+  </div>
+
+  <!-- JavaScript to handle dynamic key inputs -->
+<!-- JavaScript to handle dynamic key inputs -->
+<script>
+  // Function to update key inputs based on AES type
+  function updateKeyInputs() {
+    var aesType = document.getElementById('aesType').value;
+    var keyInputsContainer = document.getElementById('keyInputs');
+
+    // Clear previous key inputs
+    keyInputsContainer.innerHTML = '';
+
+    // Create new key input based on the selected AES type
+    var keyInput = document.createElement('div');
+    keyInput.className = 'form-group';
+
+    var keyLabel = document.createElement('label');
+    keyLabel.setAttribute('for', 'key');
+    keyLabel.textContent = 'Clé';
+
+    var keyInputField = document.createElement('input');
+    keyInputField.setAttribute('type', 'text');
+    keyInputField.setAttribute('name', 'key');
+    keyInputField.className = 'form-control';
+    keyInputField.setAttribute('id', 'inputKey');
+    keyInputField.setAttribute('placeholder', 'Entrez la clé');
+    keyInputField.required = true;
+
+    // Set the min and max length based on the selected AES type
+    if (aesType === 'AES-128') {
+      keyInputField.setAttribute('minlength', '16');
+      keyInputField.setAttribute('maxlength', '16');
+    } else if (aesType === 'AES-192') {
+      keyInputField.setAttribute('minlength', '24');
+      keyInputField.setAttribute('maxlength', '24');
+    } else if (aesType === 'AES-256') {
+      keyInputField.setAttribute('minlength', '32');
+      keyInputField.setAttribute('maxlength', '32');
+    }
+
+    keyInput.appendChild(keyLabel);
+    keyInput.appendChild(keyInputField);
+    keyInputsContainer.appendChild(keyInput);
+  }
+
+  // Attach event listener to the dropdown
+  document.getElementById('aesType').addEventListener('change', updateKeyInputs);
+
+  // Initial call to update key inputs on page load
+  updateKeyInputs();
+</script>
+
+
+</body>
+</html>

@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DES</title>
+  {% load static %}
+  <link rel="stylesheet" href="{% static 'form/style.css' %}" />
+  {% load bootstrap5 %} {% bootstrap_css %} {% bootstrap_javascript %}
+</head>
+
+<body>
+  <div class="centeredContainer">
+    <div class="top">
+      <h2>Chiffrer et Dechiffrer un message avec DES</h2>
+    </div>
+
+    <div class="bottom container">
+      <h3>ENTREZ LE MESSAGE</h3>
+      <form class="m-3 p-2" method="POST" action="{%url 'validate_params'%}">
+        {% csrf_token %}
+
+        <div class="form-group">
+          <label for="process">Processus</label>
+          <select name="process" class="form-select">
+            <option value="encrypt">Chiffré</option>
+            <option value="decrypt">Déchiffré</option>
+            <option value="encrypt-decrypt">Chiffré et Déchiffré</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="message">Message claire</label>
+          <input type="text" name="message" class="form-control" id="inputLignes"
+            placeholder="Entrez le message en claire" required />
+        </div>
+
+        <div class="form-group">
+          <label for="type">Type de DES</label>
+          <select name="type" class="form-select" id="desType">
+            <option value="DES">DES</option>
+            <option value="2DES">2DES</option>
+            <option value="3DES">3DES</option>
+          </select>
+        </div>
+
+        <!-- Key inputs based on DES type -->
+        <div id="keyInputs">
+          <!-- JavaScript will dynamically add key inputs here -->
+        </div>
+
+        <div class="form-button text-center">
+          <button type="submit" class="btn btn-success btn-log rounded mt-2 w-">
+            Suivant
+          </button>
+        </div>
+      </form>
+      {% if error %}
+            <p style="color: red;">Erreur: {{ error }}</p>
+        {% endif %}
+    </div>
+  </div>
+
+  <!-- JavaScript to handle dynamic key inputs -->
+<script>
+  // Function to update key inputs based on DES type
+  function updateKeyInputs() {
+    const desType = document.getElementById('desType').value;
+    const keyInputsContainer = document.getElementById('keyInputs');
+    keyInputsContainer.innerHTML = ''; // Clear previous key inputs
+
+    // Add key inputs based on DES type
+    for (let i = 1; i <= (desType === '3DES' ? 3 : desType === '2DES' ? 2 : 1); i++) {
+      const keyInput = document.createElement('div');
+      keyInput.className = 'form-group';
+      keyInput.innerHTML = `
+        <label for="key${i}">Clé de Chiffrement ${i}</label>
+        <input type="text" name="key${i}" class="form-control" id="inputLignes"
+          placeholder="Entrez la cle de chiffrement ${i}" required />
+      `;
+      keyInputsContainer.appendChild(keyInput);
+    }
+  }
+
+  // Attach event listener to the dropdown
+  document.getElementById('desType').addEventListener('change', updateKeyInputs);
+
+  // Initial call to update key inputs on page load
+  updateKeyInputs();
+</script>
+
+</body>
+</html>

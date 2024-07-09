@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static%}
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+    <link
+      rel="stylesheet"
+      href="https://jimmyjacobson.github.io/careerday/css/reveal.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://jimmyjacobson.github.io/careerday/css/theme/default.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://jimmyjacobson.github.io/careerday/lib/css/zenburn.css"
+    />
+    <link rel="stylesheet" href="{% static 'style.css' %}" />
+</head>
+
+<body>
+    <div class="reveal">
+      <!-- Any section element inside of this container is displayed as a slide -->
+      <div class="slides">
+        <section>
+          <h1>Introduction to Symmetric Cryptography</h1>
+          <p>
+            <small
+              >Made&nbsp;&nbsp;&nbsp;by&nbsp;&nbsp;&nbsp;<a
+                href="https://github.com/ms-computer-security/python_des_aes"
+                >Group 5</a
+              ></small
+            ><br /><br />
+            <a href="{% url 'index' %}" id="btn"><span>Cipher Your text now with DES</span></a>
+              </small
+            ><br /><br />
+              <a href="{% url 'index2' %}" id="btn"><span>Cipher Your text now with AES</span></a>
+          </p>
+        </section>
+
+        <section>
+          <section>
+            <h1>Understanding the Concept</h1>
+            <h2>Definition</h2>
+            <p>
+              Symmetric cryptography, represented by algorithms like Data
+              Encryption Standard (DES) and Advanced Encryption Standard (AES),
+              is a method of encryption where the same key is used for both
+              the encryption and decryption of the data.
+            </p>
+          </section>
+          <section>
+            <h1>Objective</h1>
+            <p>
+              The objective of symmetric cryptography is to secure
+              communication and data by encrypting and decrypting information
+              using a shared key. DES and AES are widely used symmetric
+              encryption algorithms in various security applications.
+            </p>
+          </section>
+          <section>
+            <h2>Parameters of Symmetric Cryptography</h2>
+            <p>
+              To perform symmetric cryptography with algorithms like DES and
+              AES, key parameters include the encryption key, decryption key,
+              and the data to be encrypted or decrypted. These algorithms
+              provide a secure way to protect sensitive information.
+            </p>
+          </section>
+        </section>
+        <section>
+          <section>
+            <h1>About the Website</h1>
+            <h2>How It Works?</h2>
+          </section>
+          <section>
+            <h1>Enter your Parameters</h1>
+            <img src="{% static 'images/1.png' %}" class="stretch" />
+          </section>
+          <section>
+            <h1>Get your cipher text</h1>
+            <img
+              src="{% static 'images/img.png' %}"
+              class="stretch"
+            />
+          </section>
+        </section>
+        <section>
+          <section>
+            <h1>Lecturer</h1>
+            <h2>Dr Ebele</h2>
+          </section>
+        </section>
+      </div>
+    </div>
+    <script src="https://jimmyjacobson.github.io/careerday/lib/js/head.min.js"></script>
+    <script src="https://jimmyjacobson.github.io/careerday/js/reveal.min.js"></script>
+    <script src="{% static 'script.js' %}"></script>
+</body>
+</html>
